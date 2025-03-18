@@ -7,6 +7,5 @@
     ],
     "resource_type": "iam_role",
     "tags": {}
-  },
-  "resource_type": "api_gateway"
+  }
 }
