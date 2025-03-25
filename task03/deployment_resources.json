@@ -30,7 +30,7 @@
     "deploy_stage": "api",
     "dependencies": [],
     "resources": {
-      "/home": {
+      "/hello": {
         "enable_cors": true,
         "GET": {
           "enable_proxy": true,
