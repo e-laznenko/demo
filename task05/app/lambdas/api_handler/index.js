@@ -17,7 +17,7 @@ exports.handler = async (event) => {
         }
 
         // Generate event details
-        const eventId = uuidv4();
+        const eventId = uuid.v4(); // Generate a UUID for the event ID
         const timestamp = new Date().toISOString();
 
         // Prepare DynamoDB item
