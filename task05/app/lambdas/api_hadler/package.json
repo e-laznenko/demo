@@ -1,0 +1,13 @@
+{
+  "name": "api_hadler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.777.0",
+    "uuid": "^11.1.0"
+  }
+}
