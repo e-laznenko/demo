@@ -8,17 +8,8 @@
   "memory": 128,
   "timeout": 100,
   "lambda_path": "lambdas\\api_hadler",
-  "dependencies": [{
-    "resource_type": "dynamodb_table",
-    "resource_name": "Events"
-  }],
+  "dependencies": [],
   "event_sources": [
-    {
-      "resource_type": "dynamodb_trigger",
-      "target_table": "Events",
-      "batch_size": 123,
-      "function_response_types": ["ReportBatchItemFailures"]
-    }
   ],
   "env_variables": {  
     "table_name": "${target_table}",
