@@ -19,7 +19,7 @@ exports.handler = async (event) => {
             body: requestBody.content, // Store content as the body of the event
         };
 
-        const tableName = "Events";
+        const tableName =  process.env.target_table;
 
         // Save event to DynamoDB
         const params = {
