@@ -2,55 +2,42 @@ const AWS = require('aws-sdk');
 const uuid = require('uuid');
 
 // Create DynamoDB service object
-const dynamoDB = new AWS.DynamoDB.DocumentClient({ region: process.env.region});
-const TABLE_NAME  = process.env.table_name;
+const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
+// The Lambda function handler
 exports.handler = async (event) => {
     try {
-        const body = JSON.parse(event.body);
-        
-        if (!body.principalId || !body.content) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ error: "Missing required fields: principalId or content" }),
-            };
-        }
+        // Parse the incoming request body
+        const requestBody = JSON.parse(event.body);
 
-        // Generate event details
-        const eventId = uuid.v4(); // Generate a UUID for the event ID
-        const timestamp = new Date().toISOString();
-
-        // Prepare DynamoDB item
-        const item = {
-            id: { S: eventId },
-            principalId: { N: body.principalId.toString() },
-            createdAt: { S: timestamp },
-            body: { S: JSON.stringify(body.content) },
+        // Create an event object
+        const newEvent = {
+            id: uuid.v4(), // Generate a UUID for the event ID
+            principalId: requestBody.principalId,
+            createdAt: new Date().toISOString(),
+            body: requestBody.content, // Store content as the body of the event
         };
 
-        // Save to DynamoDB
-        await dynamoDB.send(new PutItemCommand({
-            TableName: TABLE_NAME,
-            Item: item,
-        }));
-
-        // Construct response event
-        const createdEvent = {
-            id: eventId,
-            principalId: body.principalId,
-            createdAt: timestamp,
-            body: body.content,
+        // Save event to DynamoDB
+        const params = {
+            TableName: 'Events', // Your DynamoDB table name
+            Item: newEvent,
         };
 
+        await dynamoDB.put(params).promise(); // Save the event to DynamoDB
+
+        // Return the created event as the response
         return {
             statusCode: 201,
-            body: JSON.stringify({ event: createdEvent }),
+            body: JSON.stringify({
+                event: newEvent,
+            }),
         };
     } catch (error) {
-        console.error("Error:", error);
+        console.error('Error creating event:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: "Internal Server Error" }),
+            body: JSON.stringify({ message: 'Error creating event' }),
         };
     }
 };
