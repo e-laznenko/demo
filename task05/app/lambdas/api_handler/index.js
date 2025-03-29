@@ -7,6 +7,7 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient();
 // The Lambda function handler
 exports.handler = async (event) => {
     try {
+        console.log("Received event:", JSON.stringify(event, null, 2));
         // Parse the incoming request body
         const requestBody = JSON.parse(event.body);
 
@@ -25,6 +26,9 @@ exports.handler = async (event) => {
             TableName: tableName, 
             Item: newEvent,
         };
+
+        console.log("Using DynamoDB table:", process.env.target_table);
+        console.log("EVENT", newEvent);
 
         await dynamoDB.put(params).promise(); // Save the event to DynamoDB
 
