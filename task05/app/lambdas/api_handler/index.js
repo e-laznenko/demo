@@ -1,7 +1,8 @@
-const AWS = require("aws-sdk");
-const { v4: uuidv4 } = require("uuid");
+const AWS = require('aws-sdk');
+const uuid = require('uuid');
 
-const dynamoDB = new AWS.DynamoDBClient({ region: process.env.region});
+// Create DynamoDB service object
+const dynamoDB = new AWS.DynamoDB.DocumentClient({ region: process.env.region});
 const TABLE_NAME  = process.env.table_name;
 
 exports.handler = async (event) => {
