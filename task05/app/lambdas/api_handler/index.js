@@ -17,10 +17,12 @@ exports.handler = async (event) => {
             createdAt: new Date().toISOString(),
             body: requestBody.content, // Store content as the body of the event
         };
-        
+
+        const tableName = "Events";
+
         // Save event to DynamoDB
         const params = {
-            TableName: process.env.table_name, // Your DynamoDB table name
+            TableName: tableName, 
             Item: newEvent,
         };
 
