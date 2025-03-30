@@ -29,12 +29,12 @@ export function response(ctx) {
         return util.error("Event not found.", "NotFoundError");  // Handle event not found
     }
 
-    // Return the event data (ensure types are correctly mapped)
+    // Return the event data (no need for parseInt or JSON.parse)
     const event = {
         id: ctx.result.id.S,  // Extract ID from the result
-        userId: parseInt(ctx.result.userId.N, 10),  // Parse userId as an integer
+        userId: ctx.result.userId.N,  // No need for parseInt if stored as number in DynamoDB
         createdAt: ctx.result.createdAt.S,  // Extract creation timestamp
-        payLoad: JSON.parse(ctx.result.payLoad.S)  // Parse payload as JSON
+        payLoad: ctx.result.payLoad.S  // Directly use the payload (assuming it's already a string)
     };
     return event;
 }

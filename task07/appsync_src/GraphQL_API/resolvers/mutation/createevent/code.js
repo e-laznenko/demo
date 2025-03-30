@@ -6,18 +6,18 @@ import { util } from '@aws-appsync/utils';
  * @returns {*} the request
  */
 export function request(ctx) {
-    const eventId = util.autoId();  // Generate a new unique ID
-    const createdAt = util.time.nowISO8601();  // Get current timestamp in ISO 8601 format
-    ctx.stash['event_id'] = eventId;  // Store the generated ID in stash for later use
+    const eventId = util.autoId();
+    const createdAt = util.time.nowISO8601();
+    ctx.stash['event_id'] = eventId;  // Storing the generated ID for use in the response mapping
     return {
         operation: "PutItem",
         key: {
-            "id": { "S": eventId }  // Set ID of the new event
+            "id": { "S": eventId }
         },
         attributeValues: {
-            "userId": { "N": ctx.args.userId.toString() },  // Ensure userId is in number format
-            "createdAt": { "S": createdAt },  // Store the creation timestamp
-            "payLoad": { "S": ctx.args.payLoad }  // Store payload data
+            "userId": { "N": ctx.args.userId.toString() },
+            "createdAt": { "S": createdAt },
+            "payLoad": { "S": ctx.args.payLoad }
         }
     };
 }
@@ -29,15 +29,14 @@ export function request(ctx) {
  */
 export function response(ctx) {
     if (ctx.error) {
-        return util.error(ctx.error.message, ctx.error.type);  // Return error if there is one
+        return util.error(ctx.error.message, ctx.error.type);
     }
 
-    // Return the created event with the ID and createdAt values
     const event = {
-        id: ctx.stash['event_id'],  // Retrieved from stash
-        userId: ctx.args.userId,  // User ID from the request
-        createdAt: util.time.nowISO8601(),  // Current timestamp for event creation
-        payLoad: ctx.args.payLoad  // Payload from the request
+        id: ctx.stash['event_id'],
+        userId: ctx.args.userId,
+        createdAt: util.time.nowISO8601(),
+        payLoad: ctx.args.payLoad
     };
     return event;
 }
