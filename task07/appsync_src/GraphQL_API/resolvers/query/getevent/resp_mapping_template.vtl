@@ -1,9 +1,4 @@
 # **getEvent Resolver (Response Mapping Template)**
 
-#if( $context.result )
-    $util.toJson($context.result)
-#else
-    $util.toJson(null)
-#end
-
+$util.toJson($ctx.result)
                 

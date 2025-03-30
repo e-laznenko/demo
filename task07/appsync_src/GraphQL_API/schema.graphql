@@ -8,13 +8,13 @@ type Query {
 
 type EventCreationResult {
 	id: ID!
-	createdAt: AWSDateTime!
+	createdAt: String!
 }
 
 type Event {
 	id: ID!
 	userId: Int!
-	createdAt: AWSDateTime!
+	createdAt: String!
 	payLoad: AWSJSON
 }
 
