@@ -1,18 +1,9 @@
-## Pass back the result from DynamoDB. **
-#if($ctx.result == null)
-  $util.error("Event not found", "NotFoundError")
-#end
+# **getEvent Resolver (Response Mapping Template)**
 
-{
-  "id": "$ctx.result.id.S",
-  "userId": $ctx.result.userId.N,
-  "createdAt": "$ctx.result.createdAt.S",
-  "payLoad": {
-    "meta": {
-      "key1": $ctx.result.payLoad.M.meta.M.key1.N,
-      "key2": "$ctx.result.payLoad.M.meta.M.key2.S"
-    }
-  }
-}
+#if( $context.result )
+    $util.toJson($context.result)
+#else
+    $util.toJson(null)
+#end
 
                 
