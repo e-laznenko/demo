@@ -1,9 +1,7 @@
-scalar AWSJSON
-
 type Event {
   id: ID!
-  createdAt: String!
   userId: Int!
+  createdAt: String!
   payLoad: AWSJSON!
 }
 

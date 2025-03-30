@@ -1,17 +1,16 @@
 import { util } from '@aws-appsync/utils';
+
 /**
  * Sends a request to the attached data source
  * @param {import('@aws-appsync/utils').Context} ctx the context
  * @returns {*} the request
  */
 export function request(ctx) {
-    // Storing the event ID for use in the response mapping
-    ctx.stash['event_id'] = ctx.args.id;
-
+    // Using the provided ID to fetch the item
     return {
         operation: "GetItem",
         key: {
-            "id": { "S": ctx.args.id }  // Searching by event ID
+            "id": { "S": ctx.args.id }
         }
     };
 }
@@ -23,20 +22,19 @@ export function request(ctx) {
  */
 export function response(ctx) {
     if (ctx.error) {
-        return util.error(ctx.error.message, ctx.error.type);  // Handle any errors
+        return util.error(ctx.error.message, ctx.error.type);
     }
 
     if (!ctx.result || !ctx.result.id) {
-        return util.error("Event not found.", "NotFoundError");  // Event not found error
+        return util.error("Event not found.", "NotFoundError");
     }
 
-    // Return the event data, ensuring the payLoad is parsed from the JSON string
+    // Return the event data
     const event = {
-        id: ctx.result.id.S,  // Event ID
-        userId: parseInt(ctx.result.userId.N, 10),  // User ID (converted to integer)
-        createdAt: ctx.result.createdAt.S,  // Event creation timestamp
-        payLoad: JSON.parse(ctx.result.payLoad.S)  // Parsing the payLoad from JSON string
+        id: ctx.result.id.S,
+        userId: parseInt(ctx.result.userId.N, 10),
+        createdAt: ctx.result.createdAt.S,
+        payLoad: JSON.parse(ctx.result.payLoad.S)
     };
-
     return event;
 }
