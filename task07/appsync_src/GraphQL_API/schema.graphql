@@ -1,15 +1,18 @@
+scalar AWSJSON
+
 type Event {
   id: ID!
-  name: String!
-  date: String!
+  createdAt: String!
+  userId: Int!
+  payLoad: AWSJSON!
+}
+
+type Mutation {
+  createEvent(userId: Int!, payLoad: AWSJSON!): Event
 }
 
 type Query {
   getEvent(id: ID!): Event
-}
-
-type Mutation {
-  createEvent(name: String!, date: String!): Event
 }
 
 schema {
