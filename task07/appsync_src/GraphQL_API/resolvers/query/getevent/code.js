@@ -29,12 +29,12 @@ export function response(ctx) {
         return util.error("Event not found.", "NotFoundError");
     }
 
-    // Return the event data
+    
     const event = {
         id: ctx.result.id.S,
         userId: parseInt(ctx.result.userId.N, 10),
         createdAt: ctx.result.createdAt.S,
-        payLoad: JSON.parse(ctx.result.payLoad.S)
+        payLoad: JSON.parse(ctx.result.payLoad.S)  // Ensure payLoad is parsed from string
     };
     return event;
 }

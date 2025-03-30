@@ -9,6 +9,7 @@ export function request(ctx) {
     const eventId = util.autoId();
     const createdAt = util.time.nowISO8601();
     ctx.stash['event_id'] = eventId;  // Storing the generated ID for use in the response mapping
+
     return {
         operation: "PutItem",
         key: {
@@ -17,7 +18,7 @@ export function request(ctx) {
         attributeValues: {
             "userId": { "N": ctx.args.userId.toString() },
             "createdAt": { "S": createdAt },
-            "payLoad": { "S": ctx.args.payLoad }
+            "payLoad": { "S": JSON.stringify(ctx.args.payLoad) }  // Serialize payload as a JSON string
         }
     };
 }
