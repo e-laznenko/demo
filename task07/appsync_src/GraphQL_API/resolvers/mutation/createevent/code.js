@@ -6,19 +6,18 @@ import { util } from '@aws-appsync/utils';
  * @returns {*} the request
  */
 export function request(ctx) {
-    const eventId = util.autoId();
-    const createdAt = util.time.nowISO8601();
-    ctx.stash['event_id'] = eventId;  // Storing the generated ID for use in the response mapping
-
+    const eventId = util.autoId();  // Generate a new unique ID
+    const createdAt = util.time.nowISO8601();  // Get current timestamp in ISO 8601 format
+    ctx.stash['event_id'] = eventId;  // Store the generated ID in stash for later use
     return {
         operation: "PutItem",
         key: {
-            "id": { "S": eventId }
+            "id": { "S": eventId }  // Set ID of the new event
         },
         attributeValues: {
-            "userId": { "N": ctx.args.userId.toString() },
-            "createdAt": { "S": createdAt },
-            "payLoad": { "S": JSON.stringify(ctx.args.payLoad) }  // Serialize payload as a JSON string
+            "userId": { "N": ctx.args.userId.toString() },  // Ensure userId is in number format
+            "createdAt": { "S": createdAt },  // Store the creation timestamp
+            "payLoad": { "S": ctx.args.payLoad }  // Store payload data
         }
     };
 }
@@ -30,15 +29,15 @@ export function request(ctx) {
  */
 export function response(ctx) {
     if (ctx.error) {
-        return util.error(ctx.error.message, ctx.error.type);
+        return util.error(ctx.error.message, ctx.error.type);  // Return error if there is one
     }
 
-    // Return the created event with the ID and createdAt generated earlier
+    // Return the created event with the ID and createdAt values
     const event = {
-        id: ctx.stash['event_id'],
-        userId: ctx.args.userId,
-        createdAt: util.time.nowISO8601(),
-        payLoad: ctx.args.payLoad
+        id: ctx.stash['event_id'],  // Retrieved from stash
+        userId: ctx.args.userId,  // User ID from the request
+        createdAt: util.time.nowISO8601(),  // Current timestamp for event creation
+        payLoad: ctx.args.payLoad  // Payload from the request
     };
     return event;
 }
