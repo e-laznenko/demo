@@ -1,4 +1,6 @@
-# **getEvent Resolver (Response Mapping Template)**
-
-$util.toJson($ctx.result)
-                
+{
+  "id": "$ctx.result.id",
+  "userId": $ctx.result.userId,
+  "createdAt": "$ctx.result.createdAt",
+  "payLoad": $util.parseJson($ctx.result.payLoad)
+}  
