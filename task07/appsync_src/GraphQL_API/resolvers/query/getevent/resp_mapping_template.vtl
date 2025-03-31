@@ -1,6 +1,1 @@
-{
-  "id": "$ctx.result.id",
-  "userId": $ctx.result.userId,
-  "createdAt": "$ctx.result.createdAt",
-  "payLoad": $util.parseJson($ctx.result.payLoad)
-}  
+$util.toJson($ctx.result)
