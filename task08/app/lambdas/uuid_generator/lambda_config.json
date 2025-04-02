@@ -14,7 +14,7 @@
     "resource_type": "cloudwatch_rule_trigger"
   }],
   "env_variables": {
-    "s3_bucket": "${s3_bucket}"
+    "target_bucket": "${target_bucket}"
   },
   "publish_version": true,
   "alias": "${lambdas_alias_name}",

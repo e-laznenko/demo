@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 const uuid = require('uuid');
 
 const s3 = new AWS.S3();
-const BUCKET_NAME = process.env.s3_bucket;
+const BUCKET_NAME = process.env.target_bucket;
 
 exports.handler = async (event) => {
     try {
@@ -19,7 +19,7 @@ exports.handler = async (event) => {
 
         // Upload the file to S3
         await s3.putObject({
-            Bucket: 'cmtr-8c65866f-uuid-storage-f4yq',
+            Bucket: process.env.target_bucket,
             Key: fileName,
             Body: fileContent,
             ContentType: "application/json"
