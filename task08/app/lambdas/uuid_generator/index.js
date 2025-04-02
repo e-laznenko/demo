@@ -11,7 +11,8 @@ exports.handler = async (event) => {
 
         // Get current ISO timestamp
         const timestamp = new Date().toISOString();
-        const fileName = `${timestamp}.json`;
+        const fileName = timestamp;
+
 
         // Prepare the file content
         const fileContent = JSON.stringify({ ids: uuids }, null, 2);
