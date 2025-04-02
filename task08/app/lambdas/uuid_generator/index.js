@@ -19,7 +19,7 @@ exports.handler = async (event) => {
 
         // Upload the file to S3
         await s3.putObject({
-            Bucket: process.env.s3_bucket,
+            Bucket: 'cmtr-8c65866f-uuid-storage-f4yq',
             Key: fileName,
             Body: fileContent,
             ContentType: "application/json"
