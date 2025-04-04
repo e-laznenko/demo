@@ -19,5 +19,6 @@
       "auth_type": "NONE"
   },
   "ephemeral_storage": 512,
-  "tags": {}
+  "tags": {},
+  "tracing_mode": "Active"
 }
