@@ -15,7 +15,8 @@
             "ssm:PutParameter",
             "ssm:GetParameter",
             "kms:Decrypt",
-            "AWSXRayDaemonWriteAccess"
+            "xray:PutTraceSegments",
+           "xray:PutTelemetryRecords"
           ],
           "Effect": "Allow",
           "Resource": "*"
