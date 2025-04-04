@@ -24,6 +24,7 @@ exports.handler = async (event) => {
 
   try {
     const data = await fetchWeatherForecast();
+    console.log('Weather data:', JSON.stringify(data, null, 2));
 
     const forecast = {
       elevation: data.elevation,
