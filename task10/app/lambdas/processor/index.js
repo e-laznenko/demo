@@ -14,7 +14,7 @@ exports.handler = async (event) => {
 
   console.log('PATh', path, method);
 
-  if (method !== 'GET' || path !== '/weather') {
+  if (method !== 'GET') {
     return {
       statusCode: 400,
       body: JSON.stringify({
