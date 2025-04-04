@@ -9,9 +9,10 @@ AWSXRay.captureAWS(require('aws-sdk'));
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async (event) => {
-  // Validate request method and path
-  const method = event.requestContext?.http?.method;
-  const path = event.requestContext?.http?.path;
+  const path = event.rawPath || event.path;
+  const method = event.requestContext?.http?.method || event.httpMethod;
+
+  console.log('PATh', path, method);
 
   if (method !== 'GET' || path !== '/weather') {
     return {
