@@ -1,0 +1,8 @@
+{
+  "name": "layer",
+  "resource_type": "lambda_layer",
+  "runtimes": [
+    "nodejs20.x"
+  ],
+  "deployment_package": "layer_layer.zip"
+}
